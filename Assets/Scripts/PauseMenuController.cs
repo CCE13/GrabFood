@@ -16,18 +16,18 @@ public class PauseMenuController : UIController
     private void Update()
     {
         //if P is pressed, pause or unpause the game based on the current state.
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            if (isPaused)
-            {
-                Resume();
-            }
-            else
-            {
-                Pause();
+        //if (Input.GetKeyDown(KeyCode.P))
+        //{
+        //    if (isPaused)
+        //    {
+        //        Resume();
+        //    }
+        //    else
+        //    {
+        //        Pause();
                 
-            }
-        }
+        //    }
+        //}
     }
     //unpauses the game
     private void Resume()
