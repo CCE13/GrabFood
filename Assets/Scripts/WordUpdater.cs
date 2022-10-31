@@ -9,6 +9,9 @@ public class WordUpdater : MonoBehaviour
     public static WordUpdater inst;
     public string currentWord;
 
+    // Default 3, lower means lower gain of fever.
+    public int gainMult = 3;
+
     private int _lettersNeeded;
     private int _lettersCollected;
 
@@ -67,10 +70,10 @@ public class WordUpdater : MonoBehaviour
         _startTimer = false;
         // 1 letter = 1s.
         // Assuming that the fever meter is 100MAX.
-        // Difficulty can be increased by decreasing the value of 5, if possible allow player to change difficulty.
+        // Difficulty can be increased by decreasing the value of 3, if possible allow player to change difficulty.
         // Use here to add to fever.
 
-        float maxAmountToGive = _lettersNeeded * (5);
+        float maxAmountToGive = _lettersNeeded * gainMult;
         float AmountToGive = maxAmountToGive - _timePassed;
         if(!FeverMode.inst.isFever) FeverMode.inst.AddFever(AmountToGive);
         // Use here to start new word.

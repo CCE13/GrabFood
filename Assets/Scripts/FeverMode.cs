@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class FeverMode : MonoBehaviour
 {
+    // Default 4, lower means slower depletion of fever.
+    public int depletionSpeed = 4;
+
     public Gradient rgb;
     public Image fill;
     public Slider feverSlider;
@@ -26,7 +29,7 @@ public class FeverMode : MonoBehaviour
         if (!isFever) return;
         float rgbtq = Mathf.PingPong(Time.time / 3, 1);
         fill.color = rgb.Evaluate(rgbtq);
-        feverSlider.value -= Time.deltaTime * 4;
+        feverSlider.value -= Time.deltaTime * depletionSpeed;
 
         if (feverSlider.value <= 0)
         {
