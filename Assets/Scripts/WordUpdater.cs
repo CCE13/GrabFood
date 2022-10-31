@@ -5,6 +5,7 @@ using UnityEngine;
 public class WordUpdater : MonoBehaviour
 {
     [SerializeField] private GameObject ground;
+    [SerializeField] private ObjectPool letterPool;
     public static WordUpdater inst;
     public string currentWord;
 
@@ -42,7 +43,7 @@ public class WordUpdater : MonoBehaviour
             Vector3 letterPos = ground.transform.Find(currentWord[i].ToString()).transform.position;
             letterPos.y = 0.5f;
 
-            var letter = ObjectPool.inst.GetObj();
+            var letter = letterPool.GetObj();
             letter.transform.position = letterPos;
 
             letter.SetActive(true);
@@ -67,10 +68,11 @@ public class WordUpdater : MonoBehaviour
         // 1 letter = 1s.
         // Assuming that the fever meter is 100MAX.
         // Difficulty can be increased by decreasing the value of 5, if possible allow player to change difficulty.
-        float maxAmountToGive = _lettersNeeded * (5);
-        float AmountToGive = _lettersNeeded - _timePassed;
-
         // Use here to add to fever.
+
+        float maxAmountToGive = _lettersNeeded * (5);
+        float AmountToGive = maxAmountToGive - _timePassed;
+        if(!FeverMode.inst.isFever) FeverMode.inst.AddFever(AmountToGive);
         // Use here to start new word.
         yield return new WaitForSeconds(0.3f);
         NextWord();

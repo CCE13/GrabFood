@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
 
             var keyPressed = Input.inputString;
             Transform keyToGoTo = ground.transform.Find(keyPressed);
+            if (!keyToGoTo) return;
             MoveCheck(keyToGoTo);
 
             //KeyChecker key = currentKeyOn.GetComponent<KeyChecker>();
@@ -63,10 +64,16 @@ public class PlayerMovement : MonoBehaviour
     {
         _isMoving = true;
         float distance = Vector3.Distance(startpos, endPos);
-        float timeToTake = distance / 15; // divide by 25 during fever mode.
+        float timeToTake = distance / 5; // divide by 15 during fever mode.
+
+        if (FeverMode.inst.isFever)
+        {
+            timeToTake = distance / 8;
+        }
+
         float distanceOffset = distance / 100; 
 
-        for (float i = 0; i < timeToTake; i+=Time.fixedDeltaTime)
+        for (float i = 0; i < timeToTake; i+=Time.deltaTime)
         {
             transform.position = Vector3.Lerp(transform.position, endPos, i / timeToTake);
             if (Vector3.Distance(transform.position, endPos) < distanceOffset) break;

@@ -5,6 +5,8 @@ using UnityEngine;
 public class Food : MonoBehaviour
 {
     private float y;
+    [SerializeField] private ObjectPool fxPool;
+
     private void Start()
     {
         y = transform.position.y;
@@ -21,7 +23,20 @@ public class Food : MonoBehaviour
             WordUpdater.inst.UpdateTime();
 
             // Visual Feedback, but for now just turn off.
-            // +10 points.
+            if (FeverMode.inst.isFever)
+            {
+                PointsManager.inst.AddPoints(200);
+                var fx = fxPool.GetObj();
+                fx.transform.position = transform.position;
+                fx.SetActive(true);
+            }
+            else
+            {
+                PointsManager.inst.AddPoints(100);
+                var fx = fxPool.GetObj();
+                fx.transform.position = transform.position;
+                fx.SetActive(true);
+            }
             gameObject.SetActive(false);
         }
     }

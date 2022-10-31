@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
-    public static ObjectPool inst;
     public GameObject objectToPool;
     public int poolAmt;
     public List<GameObject> pool;
 
     private void Start()
     {
-        inst = this;
-
         for (int i = 0; i < poolAmt; i++)
         {
             var newObj = Instantiate(objectToPool, transform);
