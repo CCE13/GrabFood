@@ -10,15 +10,29 @@ public class PlayerMovement : MonoBehaviour
     public GameObject currentKeyOn;
     private bool _isMoving;
 
+    private GameObject previousKeyOn;
     // Start is called before the first frame update
     private void Start()
     {
         currentKeyOn = CurrentKeyOn();
+        previousKeyOn = currentKeyOn;
     }
 
     // Update is called once per frame
     void Update()
     {
+        currentKeyOn = CurrentKeyOn();
+
+        if (!currentKeyOn) return;
+        currentKeyOn.transform.GetChild(0).gameObject.SetActive(false);
+
+        if(currentKeyOn != previousKeyOn && previousKeyOn)
+        {
+            previousKeyOn.transform.GetChild(0).gameObject.SetActive(true);
+        }
+
+        previousKeyOn = currentKeyOn;
+
         if (_isMoving) return;
         if (Input.anyKeyDown)
         {
@@ -82,14 +96,13 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log("Coroutine Move has finished.");
         transform.position = endPos;
         _isMoving = false;
-        currentKeyOn = key;
 
     }
 
     private GameObject CurrentKeyOn()
     {
         Physics.Raycast(transform.position, Vector3.down, out var hit, 1, keyMask);
-        if(hit.collider != null)
+        if (hit.collider != null)
         {
             return hit.collider.gameObject;
         }
