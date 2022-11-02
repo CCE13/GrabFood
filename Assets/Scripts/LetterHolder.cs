@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Food : MonoBehaviour
+public class LetterHolder : MonoBehaviour
 {
+    public int posInWord;
+    public string letter;
+
     private float y;
     [SerializeField] private ObjectPool fxPool;
 
@@ -20,22 +23,28 @@ public class Food : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            WordUpdater.inst.UpdateTime();
+            WordUpdater.inst.UpdateTime(posInWord,letter);
 
             // Visual Feedback, but for now just turn off.
             if (FeverMode.inst.isFever)
             {
                 PointsManager.inst.AddPoints(200);
-                var fx = fxPool.GetObj();
-                fx.transform.position = transform.position;
-                fx.SetActive(true);
+
+                // Play animation.
+
+                //var fx = fxPool.GetObj();
+                //fx.transform.position = transform.position;
+                //fx.SetActive(true);
             }
             else
             {
                 PointsManager.inst.AddPoints(100);
-                var fx = fxPool.GetObj();
-                fx.transform.position = transform.position;
-                fx.SetActive(true);
+
+                // Play animation.
+
+                //var fx = fxPool.GetObj();
+                //fx.transform.position = transform.position;
+                //fx.SetActive(true);
             }
             gameObject.SetActive(false);
         }
