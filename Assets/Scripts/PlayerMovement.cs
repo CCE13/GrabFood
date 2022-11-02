@@ -7,8 +7,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GameObject ground;
     [SerializeField] private float speed;
     [SerializeField] private LayerMask keyMask;
+    [SerializeField] private ParticleSystem stunfx;
+    [SerializeField] private CameraController camCont;
     public GameObject currentKeyOn;
-    private bool _isMoving;
+    private bool _isMoving, _isStunned;
 
     private GameObject previousKeyOn;
     // Start is called before the first frame update
@@ -33,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
 
         previousKeyOn = currentKeyOn;
 
-        if (_isMoving) return;
+        if (_isMoving || _isStunned) return;
         if (Input.anyKeyDown)
         {
             if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2)) return;
@@ -49,6 +51,26 @@ public class PlayerMovement : MonoBehaviour
             //StartCoroutine(Move(pos,keyToGoTo.gameObject));
             
         }
+    }
+
+    public void Stun(float duration)
+    {
+        // Add stun effects and stuff.
+        StopAllCoroutines();
+        _isMoving = false;
+        _isStunned = true;
+        MoveCheck(currentKeyOn.transform);
+        stunfx.Play();
+        camCont.StunEffect();
+
+        Invoke("UnStun", duration);
+
+    }
+
+    private void UnStun()
+    {
+        // Remove any animation or effects.
+        _isStunned = false;
     }
 
     private void MoveCheck(Transform keyToGoTo)
@@ -78,11 +100,11 @@ public class PlayerMovement : MonoBehaviour
     {
         _isMoving = true;
         float distance = Vector3.Distance(startpos, endPos);
-        float timeToTake = distance / 5; // divide by 15 during fever mode.
+        float timeToTake = distance / 3; // divide by 15 during fever mode.
 
         if (FeverMode.inst.isFever)
         {
-            timeToTake = distance / 8;
+            timeToTake = distance / 6;
         }
 
         float distanceOffset = distance / 100; 
@@ -106,6 +128,6 @@ public class PlayerMovement : MonoBehaviour
         {
             return hit.collider.gameObject;
         }
-        return null;
+        return currentKeyOn;
     }
 }

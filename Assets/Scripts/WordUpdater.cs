@@ -8,6 +8,7 @@ public class WordUpdater : MonoBehaviour
 {
     [SerializeField] private GameObject ground;
     [SerializeField] private ObjectPool letterPool;
+    [SerializeField] private ObjectPool peoplePool;
     public static WordUpdater inst;
     public string currentWord;
 
@@ -16,6 +17,7 @@ public class WordUpdater : MonoBehaviour
 
     // Default 3, lower means lower gain of fever.
     public int gainMult = 3;
+    public float peopleSpawnDelayMax = 3;
 
     private int _lettersNeeded;
     private int _lettersCollected;
@@ -41,6 +43,7 @@ public class WordUpdater : MonoBehaviour
     [ContextMenu("Start")]
     public void NextWord()
     {
+        StopAllCoroutines();
         _timePassed = 0;
         currentWord = words[Random.Range(0, words.Count)];
         _lettersNeeded = currentWord.Length;
@@ -64,6 +67,7 @@ public class WordUpdater : MonoBehaviour
         }
 
         wordDisplayText.text = wordToDisplay;
+        StartCoroutine(SpawnPeople());
     }
 
     public void UpdateTime(int pos, string letter)
@@ -89,6 +93,32 @@ public class WordUpdater : MonoBehaviour
         if (_lettersCollected == _lettersNeeded) StartCoroutine(EndTime());
     }
 
+    private IEnumerator SpawnPeople()
+    {
+        // Spawn people here.
+        peoplePool.GetObj().TryGetComponent(out Pedestrian newPeople);
+        char c = (char)('a' + Random.Range(0, 26));
+        Vector3 offset = ground.transform.Find(c.ToString()).transform.position;
+
+        // 0 = bottom, 1 = top.
+        int spawnLocation = Random.Range(0, 2);
+        switch (spawnLocation)
+        {
+            case 0:
+                // Spawn Bottom.
+                newPeople.SpawnBottom(offset);
+                break;
+            case 1:
+                // Spawn Top.
+                newPeople.SpawnTop(offset);
+                break;
+        }
+
+        float delay = Random.Range(0.5f, peopleSpawnDelayMax);
+        yield return new WaitForSeconds(delay);
+        StartCoroutine(SpawnPeople());
+    }
+
     public IEnumerator EndTime()
     {
         _startTimer = false;
@@ -102,7 +132,7 @@ public class WordUpdater : MonoBehaviour
         if(!FeverMode.inst.isFever) FeverMode.inst.AddFever(AmountToGive);
         // Use here to start new word.
         yield return new WaitForSeconds(0.3f);
-        FindObjectOfType<Notification>().NotificationPopUp(Random.Range(0f,5f));
+        //FindObjectOfType<Notification>().NotificationPopUp(Random.Range(0f,5f));
         NextWord();
     }
 }
