@@ -4,10 +4,22 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public void StunEffect()
+    public void NudgeShake()
     {
         StopAllCoroutines();
-        float toRotate = Random.Range(-3, 4);
+        int randomizerBool = Random.Range(0, 2);
+        float toRotate = 0;
+
+        switch (randomizerBool)
+        {
+            case 0:
+                toRotate = Random.Range(0.5f, 4);
+                break;
+            case 1:
+                toRotate = Random.Range(-0.5f, -3);
+                break;
+        }
+
         StartCoroutine(RotateFX(toRotate));
     }
 
@@ -17,11 +29,11 @@ public class CameraController : MonoBehaviour
         float timeToTake = 0.2f;
         float curAngle = 0;
 
-        while(timePassed < timeToTake)
+        while (timePassed < timeToTake)
         {
-            if(timePassed/timeToTake < 0.5f)
+            if (timePassed / timeToTake < 0.5f)
             {
-                curAngle = Mathf.Lerp(0, angle, timePassed / (timeToTake/2));
+                curAngle = Mathf.Lerp(0, angle, timePassed / (timeToTake / 2));
             }
             else
             {
