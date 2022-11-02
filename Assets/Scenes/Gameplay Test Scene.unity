@@ -12903,6 +12903,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   posInWord: 0
   letter: 
+  keyMask:
+    serializedVersion: 2
+    m_Bits: 128
   fxPool: {fileID: 65501390}
 --- !u!1 &1984693583
 GameObject:

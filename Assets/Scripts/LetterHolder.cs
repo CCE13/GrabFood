@@ -8,12 +8,23 @@ public class LetterHolder : MonoBehaviour
     public string letter;
 
     private float y;
+    [SerializeField] private LayerMask keyMask;
     [SerializeField] private ObjectPool fxPool;
 
     private void Start()
     {
         y = transform.position.y;
     }
+
+    private void OnEnable()
+    {
+        Physics.Raycast(transform.position, Vector3.down, out var hit, 1, keyMask);
+        if (hit.collider != null)
+        {
+            hit.collider.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+        }
+    }
+
     private void Update()
     {
         transform.Rotate(new Vector3(0, 1, 0));

@@ -102,7 +102,7 @@ public class PlayerMovement : MonoBehaviour
     private GameObject CurrentKeyOn()
     {
         Physics.Raycast(transform.position, Vector3.down, out var hit, 1, keyMask);
-        if (hit.collider != null && hit.collider.CompareTag("Key"))
+        if (hit.collider != null)
         {
             return hit.collider.gameObject;
         }
