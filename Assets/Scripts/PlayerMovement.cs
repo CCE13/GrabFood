@@ -4,26 +4,16 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public bool started = false;
     [SerializeField] private GameObject ground;
     [SerializeField] private float speed;
     [SerializeField] private LayerMask keyMask;
-<<<<<<< Updated upstream
     public GameObject currentKeyOn;
     private bool _isMoving;
-=======
-    [SerializeField] private ParticleSystem stunfx, smokefx;
-    [SerializeField] private CameraController camCont;
-    public GameObject currentKeyOn;
-    private bool _isMoving, _isStunned;
-    private Animator anim;
->>>>>>> Stashed changes
 
     private GameObject previousKeyOn;
     // Start is called before the first frame update
     private void Start()
     {
-        anim = GetComponent<Animator>(); 
         currentKeyOn = CurrentKeyOn();
         previousKeyOn = currentKeyOn;
     }
@@ -31,7 +21,6 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!started) return;
         currentKeyOn = CurrentKeyOn();
 
         if (!currentKeyOn) return;
@@ -52,7 +41,6 @@ public class PlayerMovement : MonoBehaviour
             var keyPressed = Input.inputString;
             Transform keyToGoTo = ground.transform.Find(keyPressed);
             if (!keyToGoTo) return;
-            anim.Play("Move");
             MoveCheck(keyToGoTo);
 
             //KeyChecker key = currentKeyOn.GetComponent<KeyChecker>();
@@ -63,68 +51,38 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-<<<<<<< Updated upstream
-=======
-    public void Stun(float duration)
-    {
-        // Add stun effects and stuff.
-        StopAllCoroutines();
-        _isMoving = false;
-        _isStunned = true;
-        MoveCheck(currentKeyOn.transform);
-        anim.Play("Stun");
-        stunfx.Play();
-        camCont.NudgeShake();
-
-        Invoke("UnStun", duration);
-
-    }
-
-    private void UnStun()
-    {
-        // Remove any animation or effects.
-        anim.Play("Idle");
-        _isStunned = false;
-    }
-
->>>>>>> Stashed changes
     private void MoveCheck(Transform keyToGoTo)
     {
+        RaycastHit hit;
         Vector3 startRay = new Vector3(currentKeyOn.transform.position.x, transform.position.y, currentKeyOn.transform.position.z);
         Vector3 endRay = new Vector3(keyToGoTo.position.x, transform.position.y, keyToGoTo.position.z);
 
-        Vector3 dir = (endRay - startRay).normalized;
-        transform.LookAt(transform.position + dir);
-
-        if (keyToGoTo.position.x == currentKeyOn.transform.position.x ||
+        if(keyToGoTo.position.x == currentKeyOn.transform.position.x ||
            keyToGoTo.position.z == currentKeyOn.transform.position.z)
         {
-            StartCoroutine(Move(startRay,endRay, keyToGoTo.gameObject));
-            return;
-        }
+            if (Physics.Linecast(startRay, endRay, out hit))
+            {
+                if(hit.collider.CompareTag("Obstacle"))
+                {
+                    Debug.Log("Playemovement.MoveCheck has hit an Obstacle");
+                    // Use here for any visual effect to indicate that the player can not move there,, red flash.
+                    return;
+                }
+            }
 
-        // Insert a popup stating "I can't go there"
-        camCont.NudgeShake();
+            StartCoroutine(Move(startRay,endRay, keyToGoTo.gameObject));
+        }
     }
 
     private IEnumerator Move(Vector3 startpos, Vector3 endPos,GameObject key)
     {
         _isMoving = true;
-        smokefx.Play();
         float distance = Vector3.Distance(startpos, endPos);
-<<<<<<< Updated upstream
         float timeToTake = distance / 5; // divide by 15 during fever mode.
 
         if (FeverMode.inst.isFever)
         {
             timeToTake = distance / 8;
-=======
-        float timeToTake = distance / 2; // divide by 15 during fever mode.
-
-        if (FeverMode.inst.isFever)
-        {
-            timeToTake = distance / 4;
->>>>>>> Stashed changes
         }
 
         float distanceOffset = distance / 100; 
@@ -138,8 +96,7 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log("Coroutine Move has finished.");
         transform.position = endPos;
         _isMoving = false;
-        smokefx.Stop();
-        if(!_isStunned) anim.Play("Idle");
+
     }
 
     private GameObject CurrentKeyOn()
