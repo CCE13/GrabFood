@@ -102,6 +102,7 @@ public class WordUpdater : MonoBehaviour
         if(!FeverMode.inst.isFever) FeverMode.inst.AddFever(AmountToGive);
         // Use here to start new word.
         yield return new WaitForSeconds(0.3f);
+        FindObjectOfType<Notification>().NotificationPopUp(Random.Range(0f,5f));
         NextWord();
     }
 }
