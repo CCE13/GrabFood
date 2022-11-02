@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class FeverMode : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class FeverMode : MonoBehaviour
     public bool isFever;
     private Color ogColor;
 
+    public static event Action<Color> RGBFlash;
+
     private void Start()
     {
         inst = this;
@@ -30,12 +33,13 @@ public class FeverMode : MonoBehaviour
         float rgbtq = Mathf.PingPong(Time.time / 3, 1);
         fill.color = rgb.Evaluate(rgbtq);
         feverSlider.value -= Time.deltaTime * depletionSpeed;
-
+        RGBFlash?.Invoke(rgb.Evaluate(rgbtq));
         if (feverSlider.value <= 0)
         {
             isFever = false;
             fill.color = ogColor;
             feverSlider.value = 0;
+            RGBFlash?.Invoke(Color.white);
         }
     }
 
