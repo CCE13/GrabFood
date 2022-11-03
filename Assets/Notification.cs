@@ -39,19 +39,19 @@ public class Notification : MonoBehaviour
         {
             _textRating.text = "Bad";
             int index = Random.Range(0, badReviews.Count);
-            _comment.text = $"'{badReviews[index]}'";
+            _comment.text = $"\"{badReviews[index]}\"";
         }
         else if(starRating > 0.4 && starRating < 0.9f)
         {
             _textRating.text = "Good!";
             int index = Random.Range(0, goodReviews.Count);
-            _comment.text = $"'{goodReviews[index]}'";
+            _comment.text = $"\"{goodReviews[index]}\"";
         }
         else
         {
             _textRating.text = "Perfect!!";
             int index = Random.Range(0, perfectReviews.Count);
-            _comment.text = $"'{perfectReviews[index]}'";
+            _comment.text = $"\"{perfectReviews[index]}\"";
         }
 
         starsSlider.value = 1 - starRating;

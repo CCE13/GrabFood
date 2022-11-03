@@ -10980,6 +10980,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Notification
       objectReference: {fileID: 0}
+    - target: {fileID: 1774525144144529485, guid: 67ecf7ef194891b40b33cb7af5667f24,
+        type: 3}
+      propertyPath: badReviews.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1774525144144529485, guid: 67ecf7ef194891b40b33cb7af5667f24,
+        type: 3}
+      propertyPath: goodReviews.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1774525144144529485, guid: 67ecf7ef194891b40b33cb7af5667f24,
+        type: 3}
+      propertyPath: badReviews.Array.data[7]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1774525144144529485, guid: 67ecf7ef194891b40b33cb7af5667f24,
+        type: 3}
+      propertyPath: goodReviews.Array.data[6]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 1774525144144529487, guid: 67ecf7ef194891b40b33cb7af5667f24,
         type: 3}
       propertyPath: m_Pivot.x
