@@ -7,8 +7,7 @@ using UnityEngine;
 public class WordUpdater : MonoBehaviour
 {
     [SerializeField] private GameObject ground;
-    [SerializeField] private ObjectPool letterPool;
-    [SerializeField] private ObjectPool peoplePool;
+    [SerializeField] private ObjectPool letterPool, peoplePool, notifPool;
     public static WordUpdater inst;
     public string currentWord;
 
@@ -16,7 +15,7 @@ public class WordUpdater : MonoBehaviour
     public string wordToDisplay;
 
     // Default 3, lower means lower gain of fever.
-    public int gainMult = 3;
+    public int gainMult = 2;
     public float peopleSpawnDelayMax = 3;
 
     private int _lettersNeeded;
@@ -26,6 +25,7 @@ public class WordUpdater : MonoBehaviour
     private float _timePassed;
 
     public List<string> words;
+    private List<GameObject> shownNotifs = new();
 
     private void Awake()
     {
@@ -130,9 +130,39 @@ public class WordUpdater : MonoBehaviour
         float maxAmountToGive = _lettersNeeded * gainMult;
         float AmountToGive = maxAmountToGive - _timePassed;
         if(!FeverMode.inst.isFever) FeverMode.inst.AddFever(AmountToGive);
+
+        // Calculate star rating.
+        float starsRating = (8 - _timePassed) / 5;
+        notifPool.GetObj().TryGetComponent(out Notification notif);
+        notif.gameObject.SetActive(true);
+        notif.NotificationPopUp(starsRating);
+        NotifCheck(notif.gameObject);
+
         // Use here to start new word.
-        yield return new WaitForSeconds(0.3f);
-        //FindObjectOfType<Notification>().NotificationPopUp(Random.Range(0f,5f));
+        yield return new WaitForSeconds(0.5f);
         NextWord();
+    }
+
+    public void NotifCheck(GameObject newNotif)
+    {
+        if (shownNotifs.Count < 1)
+        {
+            shownNotifs.Add(newNotif);
+            return;
+        }
+
+        shownNotifs.Add(newNotif);
+
+        for (int i = 0; i < shownNotifs.Count; i++)
+        {
+            if (!shownNotifs[i].activeSelf)
+            {
+                shownNotifs.RemoveAt(i);
+                continue;
+            }
+
+            shownNotifs[i].TryGetComponent(out Notification notif);
+            notif.StartMovedown();
+        }
     }
 }

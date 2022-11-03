@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GameObject ground;
     [SerializeField] private float speed;
     [SerializeField] private LayerMask keyMask;
-    [SerializeField] private ParticleSystem stunfx, smokefx;
+    [SerializeField] private ParticleSystem stunfx;
     [SerializeField] private CameraController camCont;
     public GameObject currentKeyOn;
     private bool _isMoving, _isStunned;
@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         currentKeyOn = CurrentKeyOn();
         previousKeyOn = currentKeyOn;
+        currentKeyOn.transform.GetChild(0).gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -102,7 +103,6 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator Move(Vector3 startpos, Vector3 endPos, GameObject key)
     {
         _isMoving = true;
-        smokefx.Play();
         float distance = Vector3.Distance(startpos, endPos);
         float timeToTake = distance / 2; // divide by 15 during fever mode.
 
@@ -122,7 +122,6 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log("Coroutine Move has finished.");
         transform.position = endPos;
         _isMoving = false;
-        smokefx.Stop();
         if (!_isStunned) anim.Play("Idle");
     }
 
@@ -133,6 +132,6 @@ public class PlayerMovement : MonoBehaviour
         {
             return hit.collider.gameObject;
         }
-        return null;
+        return currentKeyOn;
     }
 }
