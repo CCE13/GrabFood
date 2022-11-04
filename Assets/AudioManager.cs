@@ -43,8 +43,8 @@ public class AudioManager : MonoBehaviour
     }
     private void Start()
     {
-        SoundVariables s = Array.Find(sounds, SoundVariables => SoundVariables.name == "WhiteNoise");
-        s.source.Play();
+        //SoundVariables s = Array.Find(sounds, SoundVariables => SoundVariables.name == "WhiteNoise");
+        //s.source.Play();
     }
 
 
@@ -55,7 +55,7 @@ public class AudioManager : MonoBehaviour
         {
             Debug.Log(name + " Not Found");
             return;
-        }
+        }   
 
         if (playAtPoint)
         {
@@ -68,6 +68,16 @@ public class AudioManager : MonoBehaviour
             s.source.Play();
         }
 
+    }
+    public void Play(string name)
+    {
+        SoundVariables s = Array.Find(sounds, SoundVariables => SoundVariables.name == name);
+        if (s == null)
+        {
+            Debug.Log(name + " Not Found");
+            return;
+        }
+        s.source.Play();
     }
 
 

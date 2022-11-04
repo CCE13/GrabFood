@@ -2879,6 +2879,8 @@ MonoBehaviour:
   stunfx: {fileID: 0}
   camCont: {fileID: 0}
   currentKeyOn: {fileID: 0}
+  _isMoving: 0
+  _isStunned: 0
 --- !u!1 &623529543
 GameObject:
   m_ObjectHideFlags: 0
@@ -10769,8 +10771,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d7f910b85d14d3439304e6f5e1b2bac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sc: {fileID: 0}
   stopTime: 0
-  timeChanges: 1
+  secondsPerHour: 0
 --- !u!114 &1459926067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10786,6 +10789,7 @@ MonoBehaviour:
   ground: {fileID: 1758427575}
   letterPool: {fileID: 162974486}
   peoplePool: {fileID: 0}
+  notifPool: {fileID: 0}
   currentWord: 
   wordDisplayText: {fileID: 589823205}
   wordToDisplay: 
@@ -10842,6 +10846,7 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   fill: {fileID: 1657483430}
   feverSlider: {fileID: 1641554178}
+  paused: 0
   isFever: 0
 --- !u!114 &1459926069
 MonoBehaviour:
@@ -10910,6 +10915,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeText: {fileID: 1324969147}
   pointsText: {fileID: 591773759}
+  wordsToCompletetText: {fileID: 0}
 --- !u!1 &1505209267
 GameObject:
   m_ObjectHideFlags: 0
@@ -11632,6 +11638,162 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1774525142559854363}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1686922064
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1686922066}
+  - component: {fileID: 1686922065}
+  m_Layer: 0
+  m_Name: 'Audio '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1686922065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1686922064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3752b05aa21a19498f7ba1ae0fcf903, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainMixer: {fileID: 24300002, guid: c93702f2015c8ad43b178683d27b4604, type: 2}
+  sounds:
+  - name: 3
+    clips: {fileID: 8300000, guid: b8ee52efc5b77f44eb1a4d75b68686f6, type: 3}
+    volume: 0.914
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    SpatialBlend: 0
+    maxDistance: 0
+    minDistance: 0
+    source: {fileID: 0}
+  - name: 2
+    clips: {fileID: 8300000, guid: a8deba6cb58c8ee42b160bc286b998c1, type: 3}
+    volume: 0.914
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    SpatialBlend: 0
+    maxDistance: 0
+    minDistance: 0
+    source: {fileID: 0}
+  - name: 1
+    clips: {fileID: 8300000, guid: c3ff6d7354d8ac9478200f6357db1b78, type: 3}
+    volume: 0.914
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    SpatialBlend: 0
+    maxDistance: 0
+    minDistance: 0
+    source: {fileID: 0}
+  - name: Go
+    clips: {fileID: 8300000, guid: 9ac6d903e0993bd45a385fed4cac0fdc, type: 3}
+    volume: 0.914
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    SpatialBlend: 0
+    maxDistance: 0
+    minDistance: 0
+    source: {fileID: 0}
+  - name: Finish
+    clips: {fileID: 8300000, guid: 7e15fe6e137ee6047ab97e66b631b855, type: 3}
+    volume: 0.914
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    SpatialBlend: 0
+    maxDistance: 0
+    minDistance: 0
+    source: {fileID: 0}
+  - name: Word Completed
+    clips: {fileID: 8300000, guid: b97115eba56c5674a98249810d61ff59, type: 3}
+    volume: 0.914
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    SpatialBlend: 0
+    maxDistance: 0
+    minDistance: 0
+    source: {fileID: 0}
+  - name: Notification
+    clips: {fileID: 8300000, guid: 17b3f7480ecd7ce40bf021e74bed0f82, type: 3}
+    volume: 0.914
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    SpatialBlend: 0
+    maxDistance: 0
+    minDistance: 0
+    source: {fileID: 0}
+  - name: Day Over
+    clips: {fileID: 8300000, guid: bdf044afcf2b3d3428e1ecf6fe8e1076, type: 3}
+    volume: 0.914
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    SpatialBlend: 0
+    maxDistance: 0
+    minDistance: 0
+    source: {fileID: 0}
+  - name: EngineRun
+    clips: {fileID: 8300000, guid: 78eb6024f026db8489d2ee896612b3f3, type: 3}
+    volume: 0.914
+    pitch: 1
+    loop: 1
+    playOnAwake: 0
+    SpatialBlend: 0
+    maxDistance: 0
+    minDistance: 0
+    source: {fileID: 0}
+  - name: EngineStart
+    clips: {fileID: 8300000, guid: bf66a265c3fdccf469bafcc864c5cee1, type: 3}
+    volume: 0.914
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    SpatialBlend: 0
+    maxDistance: 0
+    minDistance: 0
+    source: {fileID: 0}
+  - name: CannotMove
+    clips: {fileID: 8300000, guid: 7751b503f95fdd446996fb767337722b, type: 3}
+    volume: 0.914
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    SpatialBlend: 0
+    maxDistance: 0
+    minDistance: 0
+    source: {fileID: 0}
+--- !u!4 &1686922066
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1686922064}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1772.6299, y: 950.22845, z: -0.9758693}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1730852008
 GameObject:
   m_ObjectHideFlags: 0

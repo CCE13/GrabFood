@@ -34,7 +34,7 @@ public class WordUpdater : MonoBehaviour
 
     private void Update()
     {
-        if(_startTimer)
+        if (_startTimer)
         {
             _timePassed += Time.deltaTime;
         }
@@ -75,12 +75,12 @@ public class WordUpdater : MonoBehaviour
     {
         _lettersCollected++;
 
-        if(_lettersCollected == 1)
+        if (_lettersCollected == 1)
         {
             _startTimer = true;
         }
 
-        if(pos == 0)
+        if (pos == 0)
         {
             wordToDisplay = wordToDisplay.Remove(pos, 1).Insert(pos, letter.ToUpper());
         }
@@ -151,6 +151,7 @@ public class WordUpdater : MonoBehaviour
 
     public IEnumerator EndTime()
     {
+        AudioManager.Instance.Play("Word Completed");
         Summarary.inst.wordsCompleted++;
         Summarary.inst.wordsCompletedTotal++;
         _startTimer = false;
@@ -161,10 +162,10 @@ public class WordUpdater : MonoBehaviour
 
         float maxAmountToGive = _lettersNeeded * gainMult;
         float AmountToGive = maxAmountToGive - _timePassed;
-        if(!FeverMode.inst.isFever) FeverMode.inst.AddFever(AmountToGive);
+        if (!FeverMode.inst.isFever) FeverMode.inst.AddFever(AmountToGive);
 
         // Calculate star rating.
-        float starsRating = Mathf.Clamp((8 - _timePassed) / 8,0,1);
+        float starsRating = Mathf.Clamp((8 - _timePassed) / 8, 0, 1);
         notifPool.GetObj().TryGetComponent(out Notification notif);
         notif.gameObject.SetActive(true);
         notif.NotificationPopUp(starsRating);

@@ -98,6 +98,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Insert a popup stating "I can't go there"
+        AudioManager.Instance.Play("CannotMove");
         camCont.NudgeShake();
     }
 
