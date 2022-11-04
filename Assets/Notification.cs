@@ -40,19 +40,27 @@ public class Notification : MonoBehaviour
             _textRating.text = "Bad";
             int index = Random.Range(0, badReviews.Count);
             _comment.text = $"\"{badReviews[index]}\"";
+            Summarary.inst.bad++;
+            Summarary.inst.badTotal++;
         }
         else if(starRating > 0.4 && starRating < 0.9f)
         {
             _textRating.text = "Good!";
             int index = Random.Range(0, goodReviews.Count);
             _comment.text = $"\"{goodReviews[index]}\"";
+            Summarary.inst.good++;
+            Summarary.inst.goodTotal++;
         }
         else
         {
             _textRating.text = "Perfect!!";
             int index = Random.Range(0, perfectReviews.Count);
             _comment.text = $"\"{perfectReviews[index]}\"";
+            Summarary.inst.perfect++;
+            Summarary.inst.perfectTotal++;
         }
+
+        Summarary.inst.roundStarLumSum += starRating;
 
         starsSlider.value = 1 - starRating;
 
@@ -93,6 +101,7 @@ public class Notification : MonoBehaviour
             yield return null;
         }
 
+        mask.color = new Color(255, 255, 255, 1);
         trsf.localPosition = target;
     }
 

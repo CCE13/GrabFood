@@ -6,7 +6,7 @@ using TMPro;
 public class GameplayUI : MonoBehaviour
 {
     public TMP_Text timeText;
-    public TMP_Text pointsText;
+    public TMP_Text pointsText, wordsToCompletetText;
     // Start is called before the first frame update
 
     // Update is called once per frame
@@ -21,9 +21,15 @@ public class GameplayUI : MonoBehaviour
         PointsManager.SetPoints -= SetPoints;
     }
 
+    private void Start()
+    {
+        wordsToCompletetText.text = $"Completed deliveries {Summarary.inst.wordsCompleted}/{Summarary.inst.wordsNeeded}";
+    }
+
     private void SetTimer(int hour, int min)
     {
-        timeText.text = $"{hour.ToString("00")}:{min.ToString("00")}";
+        timeText.text = $"{hour:00}:{min:00}";
+        wordsToCompletetText.text = $"Completed deliveries {Summarary.inst.wordsCompleted}/{Summarary.inst.wordsNeeded}";
     }
 
     private void SetPoints(int points)

@@ -36,27 +36,27 @@ public class LetterHolder : MonoBehaviour
         {
             WordUpdater.inst.UpdateTime(posInWord,letter);
 
-            // Visual Feedback, but for now just turn off.
-            if (FeverMode.inst.isFever)
-            {
-                PointsManager.inst.AddPoints(200);
+            //// Visual Feedback, but for now just turn off.
+            //if (FeverMode.inst.isFever)
+            //{
+            //    PointsManager.inst.AddPoints(200);
 
-                // Play animation.
+            //    // Play animation.
 
-                //var fx = fxPool.GetObj();
-                //fx.transform.position = transform.position;
-                //fx.SetActive(true);
-            }
-            else
-            {
-                PointsManager.inst.AddPoints(100);
+            //    //var fx = fxPool.GetObj();
+            //    //fx.transform.position = transform.position;
+            //    //fx.SetActive(true);
+            //}
+            //else
+            //{
+            //    PointsManager.inst.AddPoints(100);
 
-                // Play animation.
+            //    // Play animation.
 
-                //var fx = fxPool.GetObj();
-                //fx.transform.position = transform.position;
-                //fx.SetActive(true);
-            }
+            //    //var fx = fxPool.GetObj();
+            //    //fx.transform.position = transform.position;
+            //    //fx.SetActive(true);
+            //}
             gameObject.SetActive(false);
         }
     }

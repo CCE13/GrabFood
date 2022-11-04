@@ -30,4 +30,12 @@ public class ObjectPool : MonoBehaviour
         return newObj;
 
     }
+
+    public void RemoveAll()
+    {
+        for (int i = 0; i < pool.Count; i++)
+        {
+            pool[i].SetActive(false);
+        }
+    }
 }

@@ -121,6 +121,8 @@ public class WordUpdater : MonoBehaviour
 
     public IEnumerator EndTime()
     {
+        Summarary.inst.wordsCompleted++;
+        Summarary.inst.wordsCompletedTotal++;
         _startTimer = false;
         // 1 letter = 1s.
         // Assuming that the fever meter is 100MAX.
@@ -132,7 +134,7 @@ public class WordUpdater : MonoBehaviour
         if(!FeverMode.inst.isFever) FeverMode.inst.AddFever(AmountToGive);
 
         // Calculate star rating.
-        float starsRating = (8 - _timePassed) / 5;
+        float starsRating = (8 - _timePassed) / 8;
         notifPool.GetObj().TryGetComponent(out Notification notif);
         notif.gameObject.SetActive(true);
         notif.NotificationPopUp(starsRating);
@@ -164,5 +166,21 @@ public class WordUpdater : MonoBehaviour
             shownNotifs[i].TryGetComponent(out Notification notif);
             notif.StartMovedown();
         }
+    }
+
+    public void ClearPools()
+    {
+        for (int i = 0; i < shownNotifs.Count; i++)
+        {
+            shownNotifs[i].TryGetComponent(out Notification notif);
+            notif.StopAllCoroutines();
+            notif.CancelInvoke();
+        }
+        currentWord = "";
+        wordDisplayText.text = "";
+        StopAllCoroutines();
+        letterPool.RemoveAll();
+        peoplePool.RemoveAll();
+        notifPool.RemoveAll();
     }
 }

@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private ParticleSystem stunfx;
     [SerializeField] private CameraController camCont;
     public GameObject currentKeyOn;
-    private bool _isMoving, _isStunned;
+    public bool _isMoving, _isStunned;
     private Animator anim;
 
     private GameObject previousKeyOn;
@@ -40,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
 
         previousKeyOn = currentKeyOn;
 
-        if (_isMoving) return;
+        if (_isMoving || _isStunned) return;
         if (Input.anyKeyDown)
         {
             if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2)) return;

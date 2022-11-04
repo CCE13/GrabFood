@@ -11,6 +11,14 @@ public class Pedestrian : MonoBehaviour
 
     private Animator anim;
 
+    private void OnEnable()
+    {
+        for (int i = 0; i < speedType.Count; i++)
+        {
+            speedType[i].SetActive(false);
+        }
+    }
+
     public void SpawnTop(Vector3 offset)
     {
         StopAllCoroutines();
@@ -18,7 +26,7 @@ public class Pedestrian : MonoBehaviour
         gameObject.SetActive(true);
         transform.rotation = Quaternion.Euler(0, 180, 0);
 
-        int type = Random.Range(0, 3);
+        int type = Random.Range(0, 2);
 
         switch (type)
         {
@@ -32,7 +40,8 @@ public class Pedestrian : MonoBehaviour
                 anim = speedType[type].GetComponent<Animator>();
                 StartCoroutine(Move(Vector3.back, adultSpeed));
                 break;
-            case 3:
+            case 2:
+                // Make the kid run onto a letter.
                 speedType[type].SetActive(true);
                 anim = speedType[type].GetComponent<Animator>();
                 StartCoroutine(Move(Vector3.back, kidSpeed));
@@ -76,7 +85,13 @@ public class Pedestrian : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            other.GetComponent<PlayerMovement>().Stun(1);
+            PlayerMovement pm = other.GetComponent<PlayerMovement>();
+            pm.Stun(1);
+
+            // +1 to number of people ran over.
+            Summarary.inst.peopleRanOverRound++;
+            Summarary.inst.peopleRanOverTotal++;
+
             StopAllCoroutines();
             anim.Play("Death");
 

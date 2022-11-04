@@ -15,6 +15,7 @@ public class FeverMode : MonoBehaviour
 
     public static FeverMode inst;
 
+    public bool paused;
     public bool isFever;
     private Color ogColor;
 
@@ -28,6 +29,7 @@ public class FeverMode : MonoBehaviour
 
     private void Update()
     {
+        if (paused) return;
         if (Input.GetKeyDown(KeyCode.Space)) StartFever();
         if (!isFever) return;
         float rgbtq = Mathf.PingPong(Time.time / 3, 1);
