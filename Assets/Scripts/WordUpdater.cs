@@ -68,6 +68,7 @@ public class WordUpdater : MonoBehaviour
 
         wordDisplayText.text = wordToDisplay;
         StartCoroutine(SpawnPeople());
+        StartCoroutine(SpawnKid());
     }
 
     public void UpdateTime(int pos, string letter)
@@ -106,17 +107,46 @@ public class WordUpdater : MonoBehaviour
         {
             case 0:
                 // Spawn Bottom.
-                newPeople.SpawnBottom(offset);
+                newPeople.SpawnBottom(offset, false);
                 break;
             case 1:
                 // Spawn Top.
-                newPeople.SpawnTop(offset);
+                newPeople.SpawnTop(offset, false);
                 break;
         }
 
-        float delay = Random.Range(0.5f, peopleSpawnDelayMax);
+        float delay = Random.Range(2, peopleSpawnDelayMax);
         yield return new WaitForSeconds(delay);
         StartCoroutine(SpawnPeople());
+    }
+
+    private IEnumerator SpawnKid()
+    {
+        // Spawn people here.
+        peoplePool.GetObj().TryGetComponent(out Pedestrian newPeople);
+
+        // 0 = bottom, 1 = top.
+        int spawnLocation = Random.Range(0, 2);
+        switch (spawnLocation)
+        {
+            case 0:
+                // Spawn Bottom.
+                newPeople.SpawnBottom(Vector3.zero, true);
+                break;
+            case 1:
+                // Spawn Top.
+                newPeople.SpawnTop(Vector3.zero, true);
+                break;
+        }
+
+        float delay = Random.Range(6, 20);
+        yield return new WaitForSeconds(delay);
+        StartCoroutine(SpawnKid());
+    }
+
+    public void RanOverKid()
+    {
+        _timePassed += 8;
     }
 
     public IEnumerator EndTime()
@@ -134,7 +164,7 @@ public class WordUpdater : MonoBehaviour
         if(!FeverMode.inst.isFever) FeverMode.inst.AddFever(AmountToGive);
 
         // Calculate star rating.
-        float starsRating = (8 - _timePassed) / 8;
+        float starsRating = Mathf.Clamp((8 - _timePassed) / 8,0,1);
         notifPool.GetObj().TryGetComponent(out Notification notif);
         notif.gameObject.SetActive(true);
         notif.NotificationPopUp(starsRating);

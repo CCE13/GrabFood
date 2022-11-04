@@ -14,7 +14,7 @@ public class TimeManager : MonoBehaviour
     private float min;
     private float time = 660;
 
-    private float nextHour;
+    private float nextHour, finalHour;
 
     public static event Action<int, int> SetTime;
     // Update is called once per frame
@@ -25,6 +25,7 @@ public class TimeManager : MonoBehaviour
         timeChanges = 60 / secondsPerHour;
         timeChangesOG = timeChanges;
         nextHour = 720;
+        finalHour = 1140;
 
         min = time % 60;
         hour = (time / 60f) % 60;
@@ -55,6 +56,7 @@ public class TimeManager : MonoBehaviour
         {
             stopTime = true;
             HourEnd();
+            Invoke("ShowSummary", 1.4f);
             return;
         }
     }
@@ -64,9 +66,12 @@ public class TimeManager : MonoBehaviour
         // Call "Round End"
         sc.StopGame();
 
+        nextHour += 60;
+    }
+
+    private void ShowSummary()
+    {
         // Show summary.
         Summarary.inst.RoundSummary();
-
-        nextHour += 60;
     }
 }

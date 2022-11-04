@@ -31,8 +31,6 @@ public class Summarary : MonoBehaviour
     public void RoundSummary()
     {
         summaryUI.Play("Enter");
-        FeverMode.inst.isFever = false;
-        FeverMode.inst.paused = true;
 
         // If the player did not collect enough words, rating for that round would be 2.5 regardless of perfect,ect.
         newStarRating = roundStarLumSum / wordsCompleted;

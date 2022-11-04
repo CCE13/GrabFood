@@ -33,5 +33,7 @@ public class StarterCont : MonoBehaviour
         pm.started = false;
         tm.stopTime = true;
         wu.ClearPools();
+        FeverMode.inst.isFever = false;
+        FeverMode.inst.paused = true;
     }
 }
