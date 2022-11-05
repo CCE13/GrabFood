@@ -31,6 +31,8 @@ public class Summarary : MonoBehaviour
     public void RoundSummary()
     {
         summaryUI.Play("Enter");
+        AudioManager.Instance.Stop("EngineRun");
+        AudioManager.Instance.Play("EngineStop");
 
         // If the player did not collect enough words, rating for that round would be 2.5 regardless of perfect,ect.
         newStarRating = roundStarLumSum / wordsCompleted;

@@ -114,7 +114,7 @@ public class Pedestrian : MonoBehaviour
             // +1 to number of people ran over.
             Summarary.inst.peopleRanOverRound++;
             Summarary.inst.peopleRanOverTotal++;
-
+            AudioManager.Instance.Play("Hit");
             // Check if this is a kid, running over kid instantly grants you 0 stars for this word.
             if(isKid)
             {

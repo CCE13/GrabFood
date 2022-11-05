@@ -12528,6 +12528,26 @@ MonoBehaviour:
     maxDistance: 0
     minDistance: 0
     source: {fileID: 0}
+  - name: EngineStop
+    clips: {fileID: 8300000, guid: 13065f7bade240a4f9ca0596066412df, type: 3}
+    volume: 0.914
+    pitch: 1
+    loop: 0
+    playOnAwake: 0
+    SpatialBlend: 0
+    maxDistance: 0
+    minDistance: 0
+    source: {fileID: 0}
+  - name: Hit
+    clips: {fileID: 8300000, guid: cf7e6f633f33e3b40b5d7e2c970ecdc2, type: 3}
+    volume: 0.52
+    pitch: 0.75
+    loop: 0
+    playOnAwake: 0
+    SpatialBlend: 0
+    maxDistance: 0
+    minDistance: 0
+    source: {fileID: 0}
 --- !u!4 &1640341786
 Transform:
   m_ObjectHideFlags: 0
