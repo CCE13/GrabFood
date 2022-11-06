@@ -146,7 +146,7 @@ public class WordUpdater : MonoBehaviour
 
     public void RanOverKid()
     {
-        _timePassed += 8;
+        _timePassed += 1;
     }
 
     public IEnumerator EndTime()
@@ -165,7 +165,7 @@ public class WordUpdater : MonoBehaviour
         if (!FeverMode.inst.isFever) FeverMode.inst.AddFever(AmountToGive);
 
         // Calculate star rating.
-        float starsRating = Mathf.Clamp((8 - _timePassed) / 8, 0, 1);
+        float starsRating = Mathf.Clamp((15 - _timePassed) / 15, 0, 1);
         notifPool.GetObj().TryGetComponent(out Notification notif);
         notif.gameObject.SetActive(true);
         notif.NotificationPopUp(starsRating);

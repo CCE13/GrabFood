@@ -37,7 +37,7 @@ public class Pedestrian : MonoBehaviour
             speedType[2].SetActive(true);
             anim = speedType[2].GetComponent<Animator>();
             StartCoroutine(KidWalk(kidSpeed));
-            Invoke("ActiveFalse", 15);
+            Invoke("ActiveFalse", 10);
 
             return;
         }
@@ -77,7 +77,7 @@ public class Pedestrian : MonoBehaviour
             speedType[2].SetActive(true);
             anim = speedType[2].GetComponent<Animator>();
             StartCoroutine(KidWalk(kidSpeed));
-            Invoke("ActiveFalse", 15);
+            Invoke("ActiveFalse", 10);
 
             return;
         }

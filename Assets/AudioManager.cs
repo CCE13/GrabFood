@@ -80,6 +80,14 @@ public class AudioManager : MonoBehaviour
         s.source.Play();
     }
 
+    public void StopAll()
+    {
+        foreach (SoundVariables s in sounds)
+        {
+            s.source.Stop();
+        }
+    }
+
 
     public void Stop(string name)
     {

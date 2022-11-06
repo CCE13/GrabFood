@@ -22,6 +22,8 @@ public class StarterCont : MonoBehaviour
         tm.stopTime = false;
         wu.NextWord();
         FeverMode.inst.paused = false;
+
+        AudioManager.Instance.Play("BGM");
     }
 
     public void StopGame()
@@ -35,5 +37,7 @@ public class StarterCont : MonoBehaviour
         wu.ClearPools();
         FeverMode.inst.isFever = false;
         FeverMode.inst.paused = true;
+
+        AudioManager.Instance.Stop("BGM");
     }
 }

@@ -16,7 +16,7 @@ public class Summarary : MonoBehaviour
     public TMP_Text commentTMP, perfectTMP, goodTMP, badTMP, peopleRanOverTMP,compensationTMP,moneyMadeTMP, wordsCompletedTMP, bonusWordsDone;
 
     public int peopleRanOverRound, peopleRanOverTotal;
-    public int wordsCompleted,wordsCompletedTotal, wordsNeeded;
+    public int wordsCompleted,wordsCompletedTotal, wordsNeeded, wordsNeededTotal;
     public int perfect, good, bad, perfectTotal, goodTotal, badTotal;
     public float starRating, newStarRating, roundStarLumSum;
     public float moneyMadeRound, moneyMadeTotal;
@@ -26,6 +26,7 @@ public class Summarary : MonoBehaviour
         inst = this;
         starRating = 0.5f;
         wordsNeeded = 4;
+        wordsNeededTotal = wordsNeeded;
     }
 
     public void RoundSummary()
@@ -118,6 +119,7 @@ public class Summarary : MonoBehaviour
         good = 0;
         bad = 0;
         newStarRating = 0;
-        wordsNeeded = Random.Range(5, 11);
+        wordsNeeded = Random.Range(4, 7);
+        wordsNeededTotal += wordsNeeded;
     }
 }

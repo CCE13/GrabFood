@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Events;
 
 public class TimeManager : MonoBehaviour
 {
@@ -12,11 +13,12 @@ public class TimeManager : MonoBehaviour
 
     private float hour;
     private float min;
-    private float time = 660;
+    private float time = 720;
 
     private float nextHour, finalHour;
 
     public static event Action<int, int> SetTime;
+    public UnityEvent hourEnd, gameEnd;
     // Update is called once per frame
 
     private void Start()
@@ -24,7 +26,7 @@ public class TimeManager : MonoBehaviour
         // Calculate timeChange, 60/secondsPerHour
         timeChanges = 60 / secondsPerHour;
         timeChangesOG = timeChanges;
-        nextHour = 720;
+        nextHour = 780;
         finalHour = 1140;
 
         min = time % 60;
@@ -52,6 +54,13 @@ public class TimeManager : MonoBehaviour
         hour = (time / 60f) % 60;
         SetTime?.Invoke((int)hour, (int)min);
 
+        if(time >= finalHour)
+        {
+            stopTime = true;
+            GameEnd();
+            return;
+        }
+
         if(time >= nextHour)
         {
             stopTime = true;
@@ -63,15 +72,27 @@ public class TimeManager : MonoBehaviour
 
     public void HourEnd()
     {
-        // Call "Round End"
-        sc.StopGame();
+        hourEnd.Invoke();
 
         nextHour += 60;
+    }
+
+    public void GameEnd()
+    {
+        gameEnd.Invoke();
+        Invoke("ShowEnd", 1.4f);
     }
 
     private void ShowSummary()
     {
         // Show summary.
         Summarary.inst.RoundSummary();
+    }
+
+    private void ShowEnd()
+    {
+        EndScreen.inst.gameObject.SetActive(true);
+        // Show endscreen.
+        EndScreen.inst.EndGame();
     }
 }
